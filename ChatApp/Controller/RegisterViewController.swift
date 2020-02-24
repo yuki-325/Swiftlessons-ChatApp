@@ -30,7 +30,7 @@ class RegisterViewController: UIViewController {
     @IBAction func registerNewUser(_ sender: Any) {
    
         //アニメーションのスタート
-        
+        startAnimation()
         //新規登録処理
         Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { (user, error) in
             
@@ -40,13 +40,15 @@ class RegisterViewController: UIViewController {
                 print("ユーザの作成が成功しました")
                 
                 //アニメーションのストップ
-                
+                //注意：クロージャーの中なので.selfをつけなければエラーになる
+                self.stopAnimation()
                 //画面をチャット画面に遷移させる
-                
+                self.performSegue(withIdentifier: "chat", sender: nil)
             }
         }
     }
     
+    //アニメーションの再生を再生させて埋め込む
     func startAnimation() {
         //アニメーションの種類を設定
         let animation = Animation.named("Loading")
@@ -56,7 +58,20 @@ class RegisterViewController: UIViewController {
         
         //設定した場所に任意のアニメーションを入れる
         animationView.animation = animation
+        animationView.contentMode = .scaleAspectFit
+        //ループの設定
+        animationView.loopMode = .loop
+        //アニメーションの再生
+        animationView.play()
+        //再生したものをviewに埋め込む
+        view.addSubview(animationView)
         
+    }
+    
+    //アニメーションをストップさせる
+    func stopAnimation() {
+        //animationViewをそままゴミ箱に捨てる
+        animationView.removeFromSuperview()
     }
     
     
