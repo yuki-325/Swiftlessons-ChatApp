@@ -36,6 +36,7 @@ class RegisterViewController: UIViewController {
             
             if error != nil {
                 print(error as Any)
+                print("errorです")
             } else {
                 print("ユーザの作成が成功しました")
                 
@@ -47,11 +48,11 @@ class RegisterViewController: UIViewController {
             }
         }
     }
-    
+
     //アニメーションの再生を再生させて埋め込む
     func startAnimation() {
         //アニメーションの種類を設定
-        let animation = Animation.named("Loading")
+        let animation = Animation.named("loading")
         
         //animationが行われる位置を指定する
         animationView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height / 1.5)
